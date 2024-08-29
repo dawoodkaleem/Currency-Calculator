@@ -1,15 +1,16 @@
-import React, { useId } from "react";
+// import React from 'react';
+import PropTypes from 'prop-types';
+import { useId } from 'react';
 
 function InputBox({
   label,
-amount,
-onAmountChange,
-onCurrencyChange,
-currencyOptions=[],
-selectCurrency ="usd",
-amountDisable =false,
-currencyDisable= false,
-
+  amount,
+  onAmountChange,
+  onCurrencyChange,
+  currencyOptions = [],
+  selectCurrency = "usd",
+  amountDisable = false,
+  currencyDisable = false,
   className = "",
 }) {
   const amountInputId = useId();
@@ -17,9 +18,7 @@ currencyDisable= false,
   return (
     <div className={`bg-white p-3 rounded-lg text-sm flex ${className}`}>
       <div className="w-1/2">
-        <label
-          htmlFor={amountInputId}
-          className="text-black/40 mb-2 inline-block">
+        <label htmlFor={amountInputId} className="text-black/40 mb-2 inline-block">
           {label}
         </label>
         <input
@@ -29,9 +28,7 @@ currencyDisable= false,
           placeholder="Amount"
           disabled={amountDisable}
           value={amount}
-          onChange={(e) =>
-            onAmountChange && onAmountChange(Number(e.target.value))
-          }
+          onChange={(e) => onAmountChange && onAmountChange(Number(e.target.value))}
         />
       </div>
       <div className="w-1/2 flex flex-wrap justify-end text-right">
@@ -40,7 +37,8 @@ currencyDisable= false,
           className="rounded-lg px-1 py-1 bg-gray-100 cursor-pointer outline-none"
           value={selectCurrency}
           onChange={(e) => onCurrencyChange && onCurrencyChange(e.target.value)}
-          disabled={currencyDisable}>
+          disabled={currencyDisable}
+        >
           {currencyOptions.map((currency) => (
             <option key={currency} value={currency}>
               {currency}
@@ -51,5 +49,26 @@ currencyDisable= false,
     </div>
   );
 }
+
+// Define prop types for the component
+InputBox.propTypes = {
+  label: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+  onAmountChange: PropTypes.func.isRequired,
+  onCurrencyChange: PropTypes.func.isRequired,
+  currencyOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectCurrency: PropTypes.string,
+  amountDisable: PropTypes.bool,
+  currencyDisable: PropTypes.bool,
+  className: PropTypes.string,
+};
+
+// Define default props in case some are not provided
+InputBox.defaultProps = {
+  selectCurrency: "usd",
+  amountDisable: false,
+  currencyDisable: false,
+  className: "",
+};
 
 export default InputBox;
